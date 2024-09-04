@@ -6,8 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody player_rigidbody;
     public Transform player_transform;
-
-    public float forward_force = 2000f;
     public float side_force = 500f;
 
     public float jump_force = 20000f;
@@ -32,7 +30,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
@@ -47,25 +45,28 @@ public class PlayerController : MonoBehaviour
         {
             jumping = true;
         }
-    }
 
+        if(transform.position.y < -1.5)
+        {
+            FindObjectOfType<GameManager>().game_over();
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
-        //player_rigidbody.AddForce(0, 0, forward_force * Time.deltaTime);
 
         if (Input.GetKey("a"))
         {
-            player_rigidbody.AddForce(-side_force * Time.deltaTime, 0, 0);
+            player_rigidbody.AddForce(-side_force * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
         else if (Input.GetKey("d"))
         {
-            player_rigidbody.AddForce(side_force * Time.deltaTime, 0, 0);
+            player_rigidbody.AddForce(side_force * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
 
         if (jumping == true)
         {
-            player_rigidbody.AddForce(0, jump_force * Time.deltaTime, 0);
+            player_rigidbody.AddForce(0, jump_force * Time.deltaTime, 0, ForceMode.VelocityChange);
 
             last_time_on_ground += Time.deltaTime;
             if (last_time_on_ground > jump_time)
