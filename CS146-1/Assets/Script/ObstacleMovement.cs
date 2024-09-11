@@ -10,11 +10,12 @@ public class ObstacleMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        obstacle_rigidbody.velocity = new Vector3(0, 0, -obstacle_speed);
+        obstacle_rigidbody.velocity = new Vector3 (0, 0, -obstacle_speed);
 
         if(obstacle_rigidbody.position.z < -5)
         {
             Destroy(gameObject); 
         }
     }
+
 }

@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private bool jumping = false;
     private float last_time_on_ground = 0;
 
+    public float firing_interval = 0.5f;
+    private float last_time_fired = -1f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,5 +78,13 @@ public class PlayerController : MonoBehaviour
                 jumping = false;
             }
         }
+
+        if (Input.GetKey("w") && (Time.time - last_time_fired > firing_interval || last_time_fired == -1)) {
+            //fire a bullet here
+            Debug.Log("Pressed w");
+            FindObjectOfType<GameManager>().fire_bullet();
+            last_time_fired = Time.time;
+        }
+            
     }
 }
